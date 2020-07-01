@@ -6,22 +6,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.octest.forms.UploadFileForm;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class FileForm
+ * Servlet implementation class Session
  */
-@WebServlet("/FileForm")
-public class FileForm extends HttpServlet {
+@WebServlet("/Session")
+public class Session extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final int TAILLE_TAMPON = 10240;
-    public static final String CHEMIN_FICHIERS = "C:/Users/burg_c/Documents/octest_files/";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FileForm() {
+    public Session() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,17 +27,28 @@ public class FileForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher("/WEB-INF/fileForm.jsp").forward(request, response);
+		// HttpSession session = request.getSession();
+		// Get session information in the controller
+		// String firstName = (String) session.getAttribute("firstName");
+		// Terminate a session willingly
+		// session.invalidate();
+		
+		this.getServletContext().getRequestDispatcher("/WEB-INF/session.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UploadFileForm form = new UploadFileForm();
-		
-		 form.uploadFile(request);
+		String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        
+        HttpSession session = request.getSession();
 
-        this.getServletContext().getRequestDispatcher("/WEB-INF/fileForm.jsp").forward(request, response);
+        session.setAttribute("firstName", firstName);
+        session.setAttribute("lastName", lastName);
+		
+		this.getServletContext().getRequestDispatcher("/WEB-INF/session.jsp").forward(request, response);
 	}
+
 }

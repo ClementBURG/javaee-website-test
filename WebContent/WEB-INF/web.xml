@@ -42,6 +42,33 @@
     <url-pattern>/fileForm</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>Session</servlet-name>
+    <servlet-class>com.octest.servlets.Session</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Session</servlet-name>
+    <url-pattern>/session</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Cookie</servlet-name>
+    <servlet-class>com.octest.servlets.CookieServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Cookie</servlet-name>
+    <url-pattern>/cookie</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>Sql</servlet-name>
+    <servlet-class>com.octest.servlets.SqlServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Sql</servlet-name>
+    <url-pattern>/sql</url-pattern>
+  </servlet-mapping>
+  
   <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

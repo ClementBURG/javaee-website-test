@@ -5,4 +5,7 @@
 	<li><a href="/test/hello">Hello</a></li>
 	<li><a href="/test/form">Simple form example</a></li>
 	<li><a href="/test/fileForm">File form example</a></li>
+	<li><a href="/test/session">Session example</a></li>
+	<li><a href="/test/cookie">Cookie example</a></li>
+	<li><a href="/test/sql">Sql example</a></li>
 </ul>

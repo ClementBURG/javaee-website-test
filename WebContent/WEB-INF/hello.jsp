@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Test</title>
+        <title>Hello</title>
     </head>
     <body>
     	<%@ include file="menu.jsp" %>

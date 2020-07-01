@@ -7,21 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.octest.forms.UploadFileForm;
+import com.octest.bdd.Names;
+import com.octest.beans.User;
 
 /**
- * Servlet implementation class FileForm
+ * Servlet implementation class SqlServlet
  */
-@WebServlet("/FileForm")
-public class FileForm extends HttpServlet {
+@WebServlet("/SqlServlet")
+public class SqlServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final int TAILLE_TAMPON = 10240;
-    public static final String CHEMIN_FICHIERS = "C:/Users/burg_c/Documents/octest_files/";
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FileForm() {
+    public SqlServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,17 +29,26 @@ public class FileForm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.getServletContext().getRequestDispatcher("/WEB-INF/fileForm.jsp").forward(request, response);
+		Names tableNames = new Names();
+        request.setAttribute("users", tableNames.recupererUtilisateurs());
+        
+        this.getServletContext().getRequestDispatcher("/WEB-INF/sql.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UploadFileForm form = new UploadFileForm();
-		
-		 form.uploadFile(request);
-
-        this.getServletContext().getRequestDispatcher("/WEB-INF/fileForm.jsp").forward(request, response);
+		User user = new User();
+		user.setFirstName(request.getParameter("firstName"));
+		user.setLastName(request.getParameter("lastName"));
+        
+        Names tableNames = new Names();
+        tableNames.ajouterUtilisateur(user);
+        
+        request.setAttribute("users", tableNames.recupererUtilisateurs());
+        
+        this.getServletContext().getRequestDispatcher("/WEB-INF/sql.jsp").forward(request, response);
 	}
+
 }
