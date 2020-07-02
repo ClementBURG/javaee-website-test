@@ -9,13 +9,14 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.octest.beans.BeanException;
 import com.octest.beans.User;
 
 public class Names {
 	private Connection connection;
     
-    public List<User> recupererUtilisateurs() {
-        List<User> utilisateurs = new ArrayList<User>();
+    public List<User> getUsers() throws BeanException {
+        List<User> users = new ArrayList<User>();
         Statement statement = null;
         ResultSet resultat = null;
 
@@ -24,10 +25,8 @@ public class Names {
         try {
             statement = connection.createStatement();
 
-            // Exécution de la requête
             resultat = statement.executeQuery("SELECT firstname, lastname FROM names;");
 
-            // Récupération des données
             while (resultat.next()) {
                 String firstname = resultat.getString("firstname");
                 String lastname = resultat.getString("lastname");
@@ -36,11 +35,10 @@ public class Names {
                 utilisateur.setFirstName(firstname);
                 utilisateur.setLastName(lastname);
                 
-                utilisateurs.add(utilisateur);
+                users.add(utilisateur);
             }
         } catch (SQLException e) {
         } finally {
-            // Fermeture de la connexion
             try {
                 if (resultat != null)
                     resultat.close();
@@ -52,11 +50,10 @@ public class Names {
             }
         }
         
-        return utilisateurs;
+        return users;
     }
     
     private void loadDatabase() {
-        // Chargement du driver
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
@@ -69,7 +66,7 @@ public class Names {
         }
     }
     
-    public void ajouterUtilisateur(User user) {
+    public void addUser(User user) {
         loadDatabase();
         
         try {

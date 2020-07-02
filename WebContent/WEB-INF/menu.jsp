@@ -8,4 +8,5 @@
 	<li><a href="/test/session">Session example</a></li>
 	<li><a href="/test/cookie">Cookie example</a></li>
 	<li><a href="/test/sql">Sql example</a></li>
+	<li><a href="/test/dao">Dao example</a></li>
 </ul>

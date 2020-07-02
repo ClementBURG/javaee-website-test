@@ -7,38 +7,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.octest.bdd.Names;
-import com.octest.beans.BeanException;
 import com.octest.beans.User;
+import com.octest.dao.DaoException;
+import com.octest.dao.DaoFactory;
+import com.octest.dao.IUserDao;
 
 /**
- * Servlet implementation class SqlServlet
+ * Servlet implementation class DaoServlet
  */
-@WebServlet("/SqlServlet")
-public class SqlServlet extends HttpServlet {
+@WebServlet("/DaoServlet")
+public class DaoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private IUserDao userDao;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SqlServlet() {
-        super();
-        // TODO Auto-generated constructor stub
+	public void init() throws ServletException {
+        DaoFactory daoFactory = DaoFactory.getInstance();
+        this.userDao = daoFactory.getUserDao();
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-        	Names tableNames = new Names();
-			request.setAttribute("users", tableNames.getUsers());
-		} catch (BeanException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		try {
+			request.setAttribute("users", userDao.list());
+		} catch (DaoException e) {
+			request.setAttribute("erreur", e.getMessage());
 		}
-        
-        this.getServletContext().getRequestDispatcher("/WEB-INF/sql.jsp").forward(request, response);
+		
+		this.getServletContext().getRequestDispatcher("/WEB-INF/dao.jsp").forward(request, response);
 	}
 
 	/**
@@ -50,16 +47,13 @@ public class SqlServlet extends HttpServlet {
 			user.setFirstName(request.getParameter("firstName"));
 			user.setLastName(request.getParameter("lastName"));
 	        
-	        Names tableNames = new Names();
-	        tableNames.addUser(user);
-	        
-	        request.setAttribute("users", tableNames.getUsers());
-		} catch (BeanException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	        userDao.add(user);
+	        request.setAttribute("users", userDao.list());
+		} catch (Exception e) {
+			request.setAttribute("erreur", e.getMessage());
 		}
         
-        this.getServletContext().getRequestDispatcher("/WEB-INF/sql.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/dao.jsp").forward(request, response);
 	}
 
 }

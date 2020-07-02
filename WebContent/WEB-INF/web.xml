@@ -69,6 +69,15 @@
     <url-pattern>/sql</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+    <servlet-name>Dao</servlet-name>
+    <servlet-class>com.octest.servlets.DaoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Dao</servlet-name>
+    <url-pattern>/dao</url-pattern>
+  </servlet-mapping>
+  
   <jsp-config>
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
